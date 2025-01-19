@@ -107,7 +107,7 @@ public class TransformerProcessor {
                 .startSpan();
         LOG.info("Process parser instance key : {}", job.getProcessInstanceKey());
         try (Scope scope = span.makeCurrent()) {
-
+//gg
 
         } finally {
             span.end();
