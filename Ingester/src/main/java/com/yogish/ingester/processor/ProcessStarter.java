@@ -10,10 +10,15 @@ import io.camunda.operate.search.Sort;
 import io.camunda.operate.search.SortOrder;
 import io.camunda.zeebe.client.ZeebeClient;
 import io.camunda.zeebe.client.api.response.DeploymentEvent;
+import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
+import io.opentelemetry.api.trace.Span;
+import io.opentelemetry.context.Context;
+import io.opentelemetry.context.propagation.TextMapPropagator;
 import io.opentelemetry.instrumentation.annotations.WithSpan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -22,28 +27,46 @@ import java.util.logging.Level;
 @Component
 public class ProcessStarter {
 
-    @Autowired
-    CamundaOperateClient camundaOperateClient;
+//    @Autowired
+//    CamundaOperateClient camundaOperateClient;
 
     private final ZeebeClient zeebeClient;
 
+    @Autowired
+    private  TextMapPropagator propagator;
     public ProcessStarter(ZeebeClient zeebeClient) {
         this.zeebeClient = zeebeClient;
     }
 
 
+
     @WithSpan
-    public void startProcessInstance(String processId, Map<String, Object> variables) {
-        String traceId = TraceUtil.getCurrentTraceId();
-        variables.put("traceId", traceId);
+    public long startProcessInstance(String processId, Map<String, Object> variables) {
+
+//
+//        Span currentSpan = Span.current();
+//        Context currentContext = Context.current();
+//
+//        Map<String, String> contextMap = new HashMap<>();
+
+        // Inject the current trace context into the map
 
 
-        zeebeClient.newCreateInstanceCommand()
+
+
+//        String traceId = TraceUtil.getCurrentTraceId();
+//        variables.put("traceId", traceId);
+        variables.put("traceContext",TraceUtil.getTraceContextMap());
+
+
+        ProcessInstanceEvent event =  zeebeClient.newCreateInstanceCommand()
                 .bpmnProcessId(processId)
                 .latestVersion()
                 .variables(variables)
                 .send()
                 .join();
+        System.out.println(event.getProcessInstanceKey());
+        return event.getProcessInstanceKey();
     }
 
     public void getallWorkFLows() throws OperateException {
@@ -55,7 +78,9 @@ public class ProcessStarter {
                 .size(1000)
                 .sort(new Sort("version", SortOrder.DESC))
                 .build();
-        List<ProcessDefinition> list = camundaOperateClient.searchProcessDefinitions(procDefQuery);;
+
+
+        //List<ProcessDefinition> list = camundaOperateClient.searchProcessDefinitions(procDefQuery);;
 
 
 

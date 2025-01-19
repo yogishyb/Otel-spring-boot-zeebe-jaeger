@@ -7,6 +7,7 @@ import io.opentelemetry.api.GlobalOpenTelemetry;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.SpanContext;
 import io.opentelemetry.api.trace.Tracer;
+import io.opentelemetry.api.trace.propagation.W3CTraceContextPropagator;
 import io.opentelemetry.context.Context;
 import io.opentelemetry.context.propagation.TextMapSetter;
 
@@ -24,9 +25,10 @@ public class TraceUtil {
     }
 
 
-    public Map<String, String> getTraceContextMap(){
+    public static Map<String, String> getTraceContextMap(){
         Span currentSpan = Span.current();
         SpanContext spanContext = currentSpan.getSpanContext();
+        Context context = Context.current();
 
         // Prepare a map to hold the trace context
         Map<String, String> traceContextMap = new HashMap<>();
@@ -36,6 +38,7 @@ public class TraceUtil {
 
         // Inject the trace context into the map
         GlobalOpenTelemetry.getPropagators().getTextMapPropagator().inject(Context.current(), traceContextMap, setter);
+        W3CTraceContextPropagator.getInstance().inject(context,traceContextMap,setter);
 return traceContextMap;
     }
 }

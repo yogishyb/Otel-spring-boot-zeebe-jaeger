@@ -23,7 +23,7 @@ class ProcessStarterTest {
 
         HashMap<String, Object> map = new HashMap<>();
         map.put("name","yogish");
-        starter.startProcessInstance("DEMO",map);
+        starter.startProcessInstance("Process_1yvmqaq",map);
     }
 
 
