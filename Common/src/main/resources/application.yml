@@ -1,8 +1,16 @@
+logging:
+  level:
+    io:
+      opentelemetry:
+        exporter: DEBUG
+    org:
+      springframework:
+        context: DEBUG
 server:
-  port: 9091
+  port: 8081
 spring:
   application:
-    name: ingester
+    name: common
   main:
     allow-circular-references: true
 camunda:
@@ -12,10 +20,3 @@ camunda:
       enabled: true
       grpc-address: http://127.0.0.1:26500
       rest-address: http://127.0.0.1:8080
-
-
-
-
-
-
-

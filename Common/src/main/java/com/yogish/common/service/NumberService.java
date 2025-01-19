@@ -1,4 +1,4 @@
-package com.yogish.ingester.service;
+package com.yogish.transformer.service;
 
 import io.opentelemetry.instrumentation.annotations.WithSpan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,21 @@ public class NumberService {
     public String getRandomNumberTrivia() {
 
 
+//        try {
+//            rep(10);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+        String url = "http://numbersapi.com/random";
+       // restTemplate.getForObject(url, String.class);
+        return getRandomNumberTrivia2();
+
+    }
+
+    @WithSpan
+    public String getRandomNumberTrivia2() {
+
+
         try {
             rep(10);
         } catch (InterruptedException e) {
@@ -31,6 +46,7 @@ public class NumberService {
 
         return restTemplate.getForObject(url, String.class);
     }
+
 
 
     private void rep(int i) throws InterruptedException {

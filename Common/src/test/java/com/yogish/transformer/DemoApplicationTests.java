@@ -1,4 +1,4 @@
-package com.yogish.ingester;
+package com.yogish.transformer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

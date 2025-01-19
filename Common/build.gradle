@@ -4,7 +4,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
-group = 'com.yogish.ingester'
+group = 'com.yogish.common'
 version = '0.0.1-SNAPSHOT'
 
 java {
@@ -48,19 +48,8 @@ dependencies {
 	implementation 'io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter'
 
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
-	//implementation 'io.camunda:spring-boot-starter-camunda-sdk:8.6.7'
-	implementation 'io.camunda.spring:java-client-operate:8.6.4'
-	implementation 'io.camunda:operate-common:8.6.7'// https://mvnrepository.com/artifact/io.camunda.spring/java-client-operate-legacy
-	implementation 'io.camunda.spring:java-client-operate-legacy:8.5.16'
 
-	implementation 'io.camunda:zeebe-client-java:8.6.7'
-
-
-
-//			<dependency>
-//			<groupId>io.camunda.spring</groupId>
-//      <artifactId>java-common</artifactId>
-//	</dependency>
+	implementation 'io.camunda:spring-boot-starter-camunda-sdk:8.6.7'
 }
 
 dependencyManagement {

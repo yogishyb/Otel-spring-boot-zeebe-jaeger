@@ -1,7 +1,7 @@
-package com.yogish.ingester.controller;
+package com.yogish.transformer.controller;
 
 
-import com.yogish.ingester.service.NumberService;
+import com.yogish.transformer.service.NumberService;
 import io.opentelemetry.api.trace.Tracer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
