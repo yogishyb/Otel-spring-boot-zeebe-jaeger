@@ -1,4 +1,4 @@
-package com.yogish.ingester.utils;
+package com.yogish.common.utils;
 
 
 

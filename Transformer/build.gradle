@@ -18,6 +18,10 @@ repositories {
 }
 
 dependencies {
+	implementation  files("${rootProject.projectDir}/../Common/build/libs/Common-0.0.1-SNAPSHOT.jar")
+
+
+
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	//runtimeOnly 'io.micrometer:micrometer-registry-otlp'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

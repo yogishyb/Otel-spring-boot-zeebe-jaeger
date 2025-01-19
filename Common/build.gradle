@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.4.1'
+	id 'org.springframework.boot' version '3.4.1' apply false
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
@@ -15,6 +15,7 @@ java {
 
 repositories {
 	mavenCentral()
+	maven { url 'https://repo.spring.io/release' }
 }
 
 dependencies {
@@ -55,9 +56,20 @@ dependencies {
 dependencyManagement {
 	imports {
 		mavenBom("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:2.11.0")
+		mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+
 	}
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.compilerArgs.add("-parameters")
+}
+
+tasks.jar {
+	// Exclude test classes and resources
+	exclude('**/test/**', '**/*Test.class', '**/Test*.class', '**/test/**')
 }

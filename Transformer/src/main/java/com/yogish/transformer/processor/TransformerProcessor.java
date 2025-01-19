@@ -3,7 +3,6 @@ package com.yogish.transformer.processor;
 import com.yogish.transformer.service.NumberService;
 import io.camunda.zeebe.client.api.response.ActivatedJob;
 import io.camunda.zeebe.spring.client.annotation.JobWorker;
-import io.camunda.zeebe.spring.client.annotation.Variable;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Context;
@@ -16,10 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.Map;
-import java.util.Objects;
 
 @Component
 public class TransformerProcessor {
@@ -41,9 +38,6 @@ public class TransformerProcessor {
 
     public Map<String, Object> chargeCreditCard(final ActivatedJob job) {
         Map<String, Object> variables = job.getVariablesAsMap();
-
-
-
 
         Map<String, String> contextMap = (Map<String, String>) variables.get("traceContext");
 
