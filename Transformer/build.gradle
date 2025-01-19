@@ -1,0 +1,63 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.4.1'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(23)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	//runtimeOnly 'io.micrometer:micrometer-registry-otlp'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	implementation 'org.springframework.boot:spring-boot-starter'
+
+
+	implementation 'io.opentelemetry:opentelemetry-api:1.46.0'
+	implementation 'io.opentelemetry:opentelemetry-sdk:1.46.0'
+	implementation 'io.opentelemetry:opentelemetry-exporter-jaeger:1.34.1'
+
+	implementation 'io.opentelemetry:opentelemetry-exporter-otlp:1.46.0'
+
+
+	//alpha module
+	implementation 'io.opentelemetry.semconv:opentelemetry-semconv:1.29.0-alpha'
+	runtimeOnly 'io.opentelemetry:opentelemetry-exporter-otlp-common:1.46.0'
+
+	implementation 'io.opentelemetry.instrumentation:opentelemetry-instrumentation-api:2.12.0'
+
+			implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	//implementation 'jakarta.servlet:jakarta.servlet-api:6.0.0'  // For Spring Boot 3+
+	//implementation 'org.springframework:spring-web:6.2.2' // Use the correct version according to your Spring version
+
+	implementation 'io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter'
+
+	implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+	implementation 'io.camunda:spring-boot-starter-camunda-sdk:8.6.7'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom("io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:2.11.0")
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
