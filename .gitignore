@@ -40,3 +40,5 @@ out/
 /Ingester/gradle/wrapper/gradle-wrapper.jar
 /Ingester/gradle/wrapper/gradle-wrapper.properties
 /Ingester/opentelemetry-javaagent.jar
+/Common/gradle/wrapper/gradle-wrapper.jar
+/Common/gradle/wrapper/gradle-wrapper.properties
