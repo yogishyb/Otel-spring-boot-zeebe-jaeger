@@ -62,23 +62,23 @@ public class ProcessStarter {
 
     }
 
-    public void listDeployedWorkflows() {
-        // Fetch deployments
-        zeebeClient.newDeployCommand()
-                .addResourceFile("path/to/your/bpmn-file.bpmn")
-                .send()
-                .join();
-
-
-        DeploymentEvent event= zeebeClient.newDeployResourceCommand().addResourceFile("").send().join();
-        // To list deployed workflows, you can maintain records manually as Zeebe does not natively list all deployed workflows.
-        event.get();
-
-        zeebeClient.newDeployResourceCommand().
-
-        for (DeploymentEvent deployment : deployments) {
-            for (Workflow workflow : deployment.getWorkflows()) {
-                System.out.println("Deployed Workflow: " + workflow.getBpmnProcessId());
-            }
-        }
+//    public void listDeployedWorkflows() {
+//        // Fetch deployments
+//        zeebeClient.newDeployCommand()
+//                .addResourceFile("path/to/your/bpmn-file.bpmn")
+//                .send()
+//                .join();
+//
+//
+//        DeploymentEvent event= zeebeClient.newDeployResourceCommand().addResourceFile("").send().join();
+//        // To list deployed workflows, you can maintain records manually as Zeebe does not natively list all deployed workflows.
+//        event.get();
+//
+//        zeebeClient.newDeployResourceCommand().
+//
+//        for (DeploymentEvent deployment : deployments) {
+//            for (Workflow workflow : deployment.getWorkflows()) {
+//                System.out.println("Deployed Workflow: " + workflow.getBpmnProcessId());
+//            }
+//        }
 }
