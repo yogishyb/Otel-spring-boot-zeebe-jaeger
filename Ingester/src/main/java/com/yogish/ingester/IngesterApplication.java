@@ -1,11 +1,15 @@
 package com.yogish.ingester;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@EnableAutoConfiguration
+//@EnableAutoConfiguration
+@ComponentScan(basePackages = {
+		"com.yogish"
+
+})
 public class IngesterApplication {
 
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package com.yogish.ingester.config;
+package com.yogish.common.config;
 
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.common.Attributes;
