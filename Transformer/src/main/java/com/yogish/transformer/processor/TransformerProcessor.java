@@ -82,16 +82,37 @@ public class TransformerProcessor {
     }
 
     @JobWorker(type = "parse")
-    //@WithSpan
+    @WithSpan
     public Map<String, Object> parsee(final ActivatedJob job) {
         Map<String, Object> variables = job.getVariablesAsMap();
-        String traceId = (String) variables.get("traceId");
-
-        String name = variables.get("name").toString();
-        LOG.info("charging credit card: {}, trace : {}", name, traceId);
 
 
-        return Map.of("amountCharged", name);
+        Map<String, String> contextMap;
+        contextMap = (Map<String, String>) variables.get("traceContext");
+
+        Context extractedContext = propagator.extract(Context.current(), contextMap, new TextMapGetter<Map<String, String>>() {
+            @Override
+            public Iterable<String> keys(Map<String, String> career) {
+                return career.keySet();
+            }
+
+            @Override
+            public @Nullable String get(@Nullable Map<String, String> career, String key) {
+                return career.get(key);
+            }
+        });
+        Span span = tracer.spanBuilder("parsed %s".formatted(String.valueOf(job.getProcessInstanceKey())))
+                //.setParent(Context.current())
+                .setParent(extractedContext)
+                .startSpan();
+        LOG.info("Process parser instance key : {}", job.getProcessInstanceKey());
+        try (Scope scope = span.makeCurrent()) {
+
+
+        } finally {
+            span.end();
+        }
+        return Map.of("amountCharged", "kfr");
     }
 
 }

@@ -51,7 +51,7 @@ public class NumberService {
             String url = "http://numbersapi.com/random";
              s= restTemplate.getForObject(url, String.class);
         } catch (Exception e) {
-            log.error("e: ", e);
+
         }
        
         return s;
