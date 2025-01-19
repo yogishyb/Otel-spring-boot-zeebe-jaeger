@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Component
@@ -38,8 +39,8 @@ public class TransformerProcessor {
 
     public Map<String, Object> chargeCreditCard(final ActivatedJob job) {
         Map<String, Object> variables = job.getVariablesAsMap();
-
-        Map<String, String> contextMap = (Map<String, String>) variables.get("traceContext");
+        Map<String, String> contextMap;
+        contextMap = (Map<String, String>) variables.get("traceContext");
 
         Context extractedContext = propagator.extract(Context.current(), contextMap, new TextMapGetter<Map<String, String>>() {
             @Override
@@ -56,11 +57,11 @@ public class TransformerProcessor {
                 //.setParent(Context.current())
                 .setParent(extractedContext)
                 .startSpan();
-        LOG.info("Process instance key : {}",job.getProcessInstanceKey());
-        try(Scope scope= span.makeCurrent()){
+        LOG.info("Process instance key : {}", job.getProcessInstanceKey());
+        try (Scope scope = span.makeCurrent()) {
 
             businessPocess(variables);
-        }finally {
+        } finally {
             span.end();
         }
 
@@ -68,21 +69,16 @@ public class TransformerProcessor {
         // Start a new span that continues from the extracted context
 
 
-
-
-
-
-
         return variables;
     }
 
     @WithSpan
-    private void businessPocess(Map<String, Object> variables){
+    private void businessPocess(Map<String, Object> variables) {
         Span.current();
         String name = variables.get("name").toString();
         //LOG.info("charging credit card: {}, trace : {}", name,traceId);
         variables.put("amountCharged", name);
-        variables.put("number",numberService.getRandomNumberTrivia());
+        variables.put("number", numberService.getRandomNumberTrivia());
     }
 
     @JobWorker(type = "parse")
@@ -92,8 +88,7 @@ public class TransformerProcessor {
         String traceId = (String) variables.get("traceId");
 
         String name = variables.get("name").toString();
-        LOG.info("charging credit card: {}, trace : {}", name,traceId);
-
+        LOG.info("charging credit card: {}, trace : {}", name, traceId);
 
 
         return Map.of("amountCharged", name);

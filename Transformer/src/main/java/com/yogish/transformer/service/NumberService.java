@@ -4,6 +4,8 @@ import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Scope;
 import io.opentelemetry.instrumentation.annotations.WithSpan;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -13,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 public class NumberService {
 
 
+    private static final Logger log = LoggerFactory.getLogger(NumberService.class);
     @Autowired
     RestTemplate restTemplate;
 
@@ -48,7 +51,7 @@ public class NumberService {
             String url = "http://numbersapi.com/random";
              s= restTemplate.getForObject(url, String.class);
         } catch (Exception e) {
-            System.out.println(e);
+            log.error("e: ", e);
         }
        
         return s;

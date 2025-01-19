@@ -30,12 +30,15 @@ public class Config {
         // Use W3C Trace Context Propagator (standard for trace context propagation)
         return W3CTraceContextPropagator.getInstance();
     }
-//    @Bean
-//    public OtlpGrpcSpanExporter otlpHttpSpanExporter(@Value("${tracing.url}") String url) {
-//        return OtlpGrpcSpanExporter.builder().setEndpoint(url).build();
-//    }
 
-        @Bean
+/*
+    @Bean
+   public OtlpGrpcSpanExporter otlpHttpSpanExporter(@Value("${tracing.url}") String url) {
+        return OtlpGrpcSpanExporter.builder().setEndpoint(url).build();
+    }
+*/
+
+    @Bean
         @Primary
     public ZeebeClient zeebeClient1() throws URISyntaxException {
         URI uri = new URI("http://127.0.0.1:26500");
