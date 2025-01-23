@@ -1,0 +1,4 @@
+rootProject.name = 'Otel-spring-boot-zeebe-jaeger'
+
+
+include ':Common', ':Ingester', ':Transformer'
